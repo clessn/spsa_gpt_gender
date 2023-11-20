@@ -66,7 +66,19 @@ topdown_fa(df=df_enviro)
 # Tester les questions : Immigration
 
 df_immigr <- CES21 %>% 
-  select(issGovSpendImmigr21, issNumberImmigr21, issNumberRefugees21, issImmigrFeel21, issIntégrationImmigr21, issImmigrEnleveJobs21) %>% 
+  select(issGovSpendImmigr21, issNumberImmigr21, issNumberRefugees21, issIntégrationImmigr21, issImmigrEnleveJobs21) %>% 
   drop_na()
 
 topdown_fa(df=df_immigr)
+
+# Échelle Gauche-droite économique
+
+CES21$scale_gd_econo <- (CES21$issProbInegality21 + CES21$issGovShouldDoStdOfLiving21 + CES21$issGapRichPoor21)/3
+
+# Échelle Environnement
+
+CES21$scale_enviro <- (CES21$issTaxeCarboneII21 + CES21$issTaxeCarbone21 + CES21$issSpendEnviro21 + CES21$issReglEnviroPrix21 + CES21$issEnviroJob21 + CES21$issConstructionOleoducs21 + CES21$issChangeClim21) /7
+
+# Échelle Immigration
+
+CES21$scale_immigr <- (CES21$issGovSpendImmigr21 + CES21$issImmigrEnleveJobs21 + CES21$issIntégrationImmigr21) / 3
