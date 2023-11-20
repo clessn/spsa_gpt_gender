@@ -55,3 +55,18 @@ df_gd_econo <- CES21 %>%
 
 topdown_fa(df=df_gd_econo)
 
+# Tester les questions : Environnement
+
+df_enviro <- CES21 %>% 
+  select(issSpendEnviro21, issTaxeCarbone21, issConstructionOleoducs21, issReglEnviroPrix21, issEnviroJob21, issTaxeCarboneII21, issChangeClim21) %>% 
+  drop_na()
+
+topdown_fa(df=df_enviro)
+
+# Tester les questions : Immigration
+
+df_immigr <- CES21 %>% 
+  select(issGovSpendImmigr21, issNumberImmigr21, issNumberRefugees21, issImmigrFeel21, issIntégrationImmigr21, issImmigrEnleveJobs21) %>% 
+  drop_na()
+
+topdown_fa(df=df_immigr)
