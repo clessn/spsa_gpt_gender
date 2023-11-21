@@ -1,13 +1,13 @@
-# Install package
-install.packages("psych")
+# Packages to install -----------------------------------------------------
+#install.packages("psych")
 
-# Loading packages
+# Loading packages --------------------------------------------------------
 library(tidyverse)
 
-# Loading data
+# Loading data ------------------------------------------------------------
 CES21 <- read.csv ("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2023-11-20.csv")
 
-# Fonction analyse factorielle
+# Custom functions --------------------------------------------------------
 topdown_fa <- function(df, nfactors = 1) {
   cronbachAlpha <<- round(psych::alpha(df)$total$raw_alpha, 2)
   factAnalysis <- factanal(df, factors=nfactors) # Analyse factorielle
@@ -71,14 +71,76 @@ df_immigr <- CES21 %>%
 
 topdown_fa(df=df_immigr)
 
-# Échelle Gauche-droite économique
+# Échelle Gauche-droite économique ####
 
-CES21$scale_gd_econo <- (CES21$issProbInegality21 + CES21$issGovShouldDoStdOfLiving21 + CES21$issGapRichPoor21)/3
+## create a vector containing the number of questions answered by each respondent in the columns making the scale
+nnas_gd_econo <- (1 - is.na(CES21$issProbInegality21)) +
+  (1 - is.na(CES21$issGovShouldDoStdOfLiving21)) +
+  (1 - is.na(CES21$issGapRichPoor21))
 
-# Échelle Environnement
+## 1 - is.na() ??
+is.na(5)
+is.na(NA)
+TRUE + 2
+FALSE + 1
+FALSE + 2
+1 - FALSE
+1 - TRUE
+## Donc:
+(1 - is.na(5)) + (1 - is.na(NA)) + (1 - is.na(2)) ## 2 réponses sur 3
 
-CES21$scale_enviro <- (CES21$issTaxeCarboneII21 + CES21$issTaxeCarbone21 + CES21$issSpendEnviro21 + CES21$issReglEnviroPrix21 + CES21$issEnviroJob21 + CES21$issConstructionOleoducs21 + CES21$issChangeClim21) /7
+## if is.na() == TRUE --> 0. Anyway, après on divise par le nombre de réponses complètes.
+CES21$scale_gd_econo <- (ifelse(is.na(CES21$issProbInegality21), 0, CES21$issProbInegality21) +
+                           ifelse(is.na(CES21$issGovShouldDoStdOfLiving21), 0, CES21$issGovShouldDoStdOfLiving21) +
+                           ifelse(is.na(CES21$issGapRichPoor21), 0, CES21$issGapRichPoor21)) / nnas_gd_econo
 
-# Échelle Immigration
+## pourquoi?
+(NA + 2 + 4) / 2
+(0 + 2 + 4) / 2
+(2 + 4) / 2 ## même résultat
 
-CES21$scale_immigr <- (CES21$issGovSpendImmigr21 + CES21$issImmigrEnleveJobs21 + CES21$issIntégrationImmigr21) / 3
+# Remplacer les valeurs indéfinies (NaN) par NA dans le cas où nnas_gd_econo est égal à 0 (aucune réponse)
+CES21$scale_gd_econo[is.nan(CES21$scale_gd_econo)] <- NA
+
+hist(CES21$scale_gd_econo)
+clessnverse::count_na(CES21$scale_gd_econo)
+
+# Échelle Environnement ####
+
+nnas_enviro <- (1 - is.na(CES21$issTaxeCarboneII21)) +
+               (1 - is.na(CES21$issTaxeCarbone21)) +
+               (1 - is.na(CES21$issSpendEnviro21)) +
+               (1 - is.na(CES21$issReglEnviroPrix21)) +
+               (1 - is.na(CES21$issEnviroJob21)) +
+               (1 - is.na(CES21$issConstructionOleoducs21)) +
+               (1 - is.na(CES21$issChangeClim21))
+
+CES21$scale_enviro <- (ifelse(is.na(CES21$issTaxeCarboneII21), 0, CES21$issTaxeCarboneII21) +
+                           ifelse(is.na(CES21$issTaxeCarbone21), 0, CES21$issTaxeCarbone21) +
+                           ifelse(is.na(CES21$issSpendEnviro21), 0, CES21$issSpendEnviro21) +
+                           ifelse(is.na(CES21$issReglEnviroPrix21), 0, CES21$issReglEnviroPrix21) +
+                           ifelse(is.na(CES21$issEnviroJob21), 0, CES21$issEnviroJob21) +
+                           ifelse(is.na(CES21$issConstructionOleoducs21), 0, CES21$issConstructionOleoducs21) +
+                           ifelse(is.na(CES21$issChangeClim21), 0, CES21$issChangeClim21)) / nnas_enviro
+
+hist(CES21$scale_enviro)
+clessnverse::count_na(CES21$scale_enviro)
+
+# Échelle Immigration ####
+
+# Calculer le nombre de réponses non manquantes pour chaque répondant
+nnas_immigr <- (1 - is.na(CES21$issGovSpendImmigr21)) +
+  (1 - is.na(CES21$issImmigrEnleveJobs21)) +
+  (1 - is.na(CES21$issIntégrationImmigr21))
+table(nnas_immigr)
+
+# Calculer l'échelle en traitant les NA comme des zéros
+CES21$scale_immigr <- (ifelse(is.na(CES21$issGovSpendImmigr21), 0, CES21$issGovSpendImmigr21) +
+                         ifelse(is.na(CES21$issImmigrEnleveJobs21), 0, CES21$issImmigrEnleveJobs21) +
+                         ifelse(is.na(CES21$issIntégrationImmigr21), 0, CES21$issIntégrationImmigr21)) / nnas_immigr
+
+# Remplacer les valeurs indéfinies (NaN) par NA
+CES21$scale_immigr[is.nan(CES21$scale_immigr)] <- NA
+
+hist(CES21$scale_immigr)
+clessnverse::count_na(CES21$scale_immigr)
