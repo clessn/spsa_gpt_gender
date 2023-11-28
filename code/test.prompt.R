@@ -7,7 +7,7 @@ df_ces21 <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/ces2021.csv"
 
 
 ####
-questions <- c("Environmental regulation should be stricter, even if it leads to consumers having to pay higher prices.")
+questions <- c("Environmental regulation should be stricter, even if it leads to consumers having to pay higher prices.", "Too many recent immigrants just don't want to fit in to Canadian society.")
 likert_scale <- c("Strongly agree", "Somewhat agree", "Neither agree nor disagree", "Somewhat disagree", "Strongly disagree")
 
 #### OpenAi loop testing ####
@@ -37,36 +37,50 @@ sampled_data <- complete_data[sample(nrow(complete_data), 100), ]  %>%
            cps21_genderid)
 
 # ----------------------- Defining SES -----------------------------------------
-for (i in 86:nrow(sampled_data)) {
+
+df_test <- data.frame(matrix(NA, ncol = 10, nrow = 10))
+colnames(df_test) <- paste("run", 1:10, sep = "")
+
+for (j in 1:10) {
+     column_name <- paste("run", j, sep = "")
+    for (i in 1:10) {
+       
 gpt_answer <- create_chat_completion(
     model = "gpt-4",
     messages = list(
         list(
             "role" = "system",
-            "content" = "You are a helpful assistant. Your role is help a survey analyst in making predictions about respondants' positions on various issues based on their socio-economic status."
+            "content" = "You are an advanced AI tasked with predicting survey respondents' positions on various issues. Your responses should be limited to selections from a given Likert scale based on respondents' socio-economic status and demographic information."
         ),
         list(
             "role" = "user",
-            "content" = paste0("Please consider this survey respondant: ",
-            "Year of birth = ", 
+            "content" = paste0("Given the respondent's details: Year of birth: ", 
             paste0(df_ces21$cps21_yob[i]),
-            ", Education = ",
+            ", Education level: ",
             paste0(df_ces21$cps21_education[i]),
-            ", Income = ",
+            ", Income category: ",
             paste0(df_ces21$cps21_income_cat[i]),
-            ", Province of residence = ",
+            ", Province of residence: ",
             paste0(df_ces21$cps21_province[i]),
-            ", Religion = ",
+            ", Religious affiliation: ",
             paste0(df_ces21$cps21_religion[i]),
-            ", Immigration status = ",
+            ", Immigration status: ",
             paste0(df_ces21$cps21_citizenship[i]),
-            ". After reviewing this respondant's information, please make a prediction about their position on the following issue: ", paste0(questions[1]), ". Use these answer choices to answer the question: ", paste0(toString(likert_scale)), ". Please only output the answer and nothing else.")
+            ", choose the most fitting position from the Likert scale on the issue: ", 
+            paste0(questions[2]), 
+            ". Use only these options: ", 
+            paste0(toString(likert_scale)), 
+            ". Provide only your selected position as a response.")
         )
     )
 )
 
+
 print(sampled_data$cps21_pos_envreg[i])
 print(gpt_answer$choices$message.content)
 
-sampled_data$cps21_pos_envreg_gpt[i] <- gpt_answer$choices$message.content 
+df_test[i, column_name] <- gpt_answer$choices$message.content
+
+        Sys.sleep(3)
+    }
 }
