@@ -53,7 +53,7 @@ df_gd_econo <- CES21 %>%
   select(issStopSubv21, issGapRichPoor21, issProbInegality21, issGovShouldDoStdOfLiving21) %>%
   drop_na()
 
-topdown_fa(df=df_gd_econo)
+topdown_fa(df_gd_econo)
 
 # Tester les questions : Environnement
 

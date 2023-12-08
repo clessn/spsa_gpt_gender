@@ -16,9 +16,6 @@ environment_likerts <- c(spend_likert, likert, likert, likert, likert, yesno_lik
 state_intervention_questions <- c("How much do you think should be done to reduce the gap between the rich and the poor in Canada?", "Is income inequality a big problem in Canada?")
 state_intervention_likerts <- c(more_likert, definitely_likert)
 
-
-
-
 likert <- "Strongly agree, Somewhat agree, Neither agree nor disagree, Somewhat disagree, Strongly disagree"
 spend_likert <- "Spend less, Spend about the same as now, Spend more, Don't know/Prefer not to answer"
 yesno_likert <- "Yes, No, Don't know/Prefer not to answer"
