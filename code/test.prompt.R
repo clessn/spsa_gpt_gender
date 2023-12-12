@@ -1,10 +1,8 @@
 library(tidyverse)
 library(openai)
 
-
 #### Data laoding - Raw data CES 21 ####
 df_ces21 <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/ces2021.csv")
-
 
 ####
 immigration_questions <- c("How much should the federal government spend on immigrants and minorities?", "Too many recent immigrants just don't want to fit in to Canadian society.", "Immigrants take jobs away from other Canadians.")
