@@ -9,11 +9,18 @@ CES21 <- read.csv ("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2023-11-2
 
 # Custom functions --------------------------------------------------------
 topdown_fa <- function(df, nfactors = 1) {
+  # Cronbach's alpha (Test 1)
   cronbachAlpha <<- round(psych::alpha(df)$total$raw_alpha, 2)
+  
+  # Analyse factorielle (Test 2)
+  
   factAnalysis <- factanal(df, factors=nfactors) # Analyse factorielle
   factorVarNames <- names(df)
+  
   factorLoadings <- as.numeric(factAnalysis$loadings[,1]) 
   factor1stEigen <<- round(eigen(cor(df))$values[1], digit=2)
+  
+  
   FAplot <- ggplot(data.frame(factorVarNames,factorLoadings), 
                    aes(x=factorVarNames, y=factorLoadings)) + 
     coord_flip() +
@@ -54,6 +61,9 @@ df_gd_econo <- CES21 %>%
   drop_na()
 
 topdown_fa(df_gd_econo)
+
+ggplot(mtcars, aes(x = mpg)) + 
+  geom_histogram()
 
 # Tester les questions : Environnement
 
