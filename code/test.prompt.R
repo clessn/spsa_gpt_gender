@@ -87,16 +87,23 @@ for (i in seq_along(data_questions$question)) {
                     paste0(df_ces21$cps21_religion[j]),
                     ", Immigration status: ",
                     paste0(df_ces21$cps21_citizenship[j]),
-                    ", choose the most fitting position from the provided likert scale on the following issue: ", 
+                    ", choose the most fitting position from the provided likert scale on the 3 following issues: ", 
                     paste0(data_questions$question[i]), 
                     ". Answer with only one of these options: ", 
-                    paste0(toString(data_questions$likert[i])), 
-                    ". Provide only your selected position as a response.")
+                    paste0(toString(data_questions$likert[i])),
+                    paste0(data_questions$question[i+1]),
+                    ". Answer with only one of these options: ",
+                    paste0(toString(data_questions$likert[i+1])),
+                    paste0(data_questions$question[i+2]),
+                    ". Answer with only one of these options: ",
+                    paste0(toString(data_questions$likert[i+2])),
+                    "Please output your answer in JSON format")
                 )
             )
         )
 
-
+total_price <- (((gpt_answer$usage$prompt_tokens) / 1000) * 0.03) + (((gpt_answer$usage$completion_tokens) / 1000 ) * 0.06)
+print(total_price * 9720)
 print(sampled_data$cps21_pos_envreg[i])
 print(gpt_answer$choices$message.content)
 
@@ -106,43 +113,4 @@ df_test[i, column_name] <- gpt_answer$choices$message.content
     }
 }
 
-# Immigration :
-# cps21_spend_imm_min(Raw)/issGovSpendImmigr21(Clean) How much should the federal government spend on immigrants and minorities? (Spend less, Spend about the same as now, Spend more, Don't know/Prefer not to answer)
-
-# pes21_fitin(Raw)/issintégrationImmigr21(Clean) Un trop grand nombre d’immigrants récents ne veulent tout simplement pas s'intégrer. (Likert)
-
-# pes21_immigjobs(Raw)/issImmigrEnleveJobs21(Clean) Les immigrants enlèvent des emplois aux autres Canadiens. (Likert)
-
-# Environnement :
-
-# cps21_spend_env(Raw)/issSpendEnviro21(Clean) How much should the federal government spend on the environment? (Spend less, Spend about the same as now, Spend more, Don't know/Prefer not to answer)
-
-# cps21_pos_carbon(raw)/issTaxeCarbone21(Clean) Afin d'aider à réduire les émissions de gaz à effet de serre, le gouvernement fédéral devrait maintenir la taxe sur le carbone. (Likert)
-
-# cps21_pos_energy(Raw)/issConstructionOleoducs21(Clean) Le gouvernement fédéral devrait en faire davantage afin d'aider le secteur énergétique canadien, notamment en construisant des oléoducs. (Likert)
-
-# cps21_pos_envreg(Raw)/issReglEnviroPrix21(Clean) La réglementation environnementale devrait être plus stricte, même si elle oblige les consommateurs à payer des prix plus élevés. (Likert)
-
-# cps21_pos_jobs(Raw)/issEnviroJob21(Clean) Lorsqu'il existe un conflit entre la protection de l'environnement et la création d'emplois, les emplois devraient avoir la priorité (Likert)
-
-# pes21_cc1(Raw)/issChangeClim21(Clean) Pensez-vous que les changements climatiques se produisent réellement? (Oui, Non, Je ne sais pas/Préfère ne pas répondre)
-
-# Intervention de l'État :
-
-# pes21_gap(Raw)/issGapRichPoor21(Clean) Que devrait-on faire pour réduire les écarts entre les riches et les pauvres au Canada? (Beaucoup plus, Un peu plus, Ni plus ni moins, Un peu moins, Beaucoup moins, Je ne sais pas / Préfère ne pas répondre)
-
-# pes21_inequal(Raw)/ issProbInegality21(Clean) Est-ce que les inégalités de revenu sont un problème important au Canada? (Définitivement oui, Probablement oui, Par certain(e), Probablement pas, Définitivement pas, Je ne sais / Préfère ne pas répondre)
-
-# pes21_stdofliving(Raw)/issGovShouldDoStdOfLiving21(Clean) Le gouvernement devrait: (Voir à ce que tout le monde ait un niveau de vie décent / Laisser les gens avancer par eux-mêmes / Je ne sais pas / Préfère ne pas répondre)
-
-
-To help reduce greenhouse gas emissions, the federal government should continue the carbon tax.
-The federal government should do more to help Canada’s energy sector, including building oil pipelines.
-When there is a conflict between protecting the environment and creating jobs, jobs should come first.
-
-Do you think that climate change is happening?
-
-How much do you think should be done to reduce the gap between the rich and the poor in Canada?
-Is income inequality a big problem in Canada?
-
-The government should: See to it that everyone has a decent standard of living (1) Leave people to get ahead on their own (2) Don’t know/ Prefer not to answer (3)
+# pes21_rural_urban
