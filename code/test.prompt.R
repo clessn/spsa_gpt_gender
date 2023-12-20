@@ -11,7 +11,8 @@ df_results <- data.frame(Answer1 = character(),
                          Answer3 = character(), 
                          stringsAsFactors = FALSE)
 
-for(i in 1:10) {
+for(i in 1:nrow(df_questions)) {
+  for (j in 1:nrow(df_ses)) {
 
 gpt_answer <- create_chat_completion(
   model = "gpt-4",
@@ -24,27 +25,27 @@ gpt_answer <- create_chat_completion(
       "role" = "user",
 
       "content" = paste0("Given the following Canadian survey respondent's details: Gender: ",
-                         paste0(df_ses$gender[1]),
+                         paste0(df_ses$gender[j]),
                          ", Ethnicity: ",
-                         paste0(df_ses$visMin[1]),
+                         paste0(df_ses$visMin[j]),
                          ", Age group: ", 
-                         paste0(df_ses$age[1]),
+                         paste0(df_ses$age[j]),
                          ", Education level: ",
-                         paste0(df_ses$education[1]),
+                         paste0(df_ses$education[j]),
                          ", Income category: ",
-                         paste0(df_ses$income[1]),
+                         paste0(df_ses$income[j]),
                          ", Residential environment: ",
-                         paste0(df_ses$rurality[1]),
+                         paste0(df_ses$rurality[j]),
                          ", Region of residence: ",
-                         paste0(df_ses$province[1]),
+                         paste0(df_ses$province[j]),
                          ". Please predict their positions on the following three issues: ",
-                         paste0(df_questions$question[1], ", ", 
-                                df_questions$question[2], ", ", 
-                                df_questions$question[3]),
+                         paste0(df_questions$question[i], ", ", 
+                                df_questions$question[i + 1], ", ", 
+                                df_questions$question[i + 2]),
                          ". For each issue, choose the most fitting position from the provided likert scale: ", 
-                         paste0(toString(df_questions$likert[1]), ", ", 
-                                toString(df_questions$likert[2]), ", ",
-                                toString(df_questions$likert[3])),
+                         paste0(toString(df_questions$likert[i]), ", ", 
+                                toString(df_questions$likert[i + 1]), ", ",
+                                toString(df_questions$likert[i + 2])),
                          ". Format your answer as a list containing only the three positions, in the same order as the questions. Nothing else. Don't use brackets, don't use quotation marks, don't use commas, don't use spaces, don't use dashes.")
     )
   )
@@ -68,6 +69,8 @@ for (response in responses) {
     }
 }
 
-
+i <- i + 3
+print (i)
+}
 
 }
