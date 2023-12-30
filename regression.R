@@ -108,6 +108,7 @@ df_ces21$scale_gd_econo <- (ifelse(is.na(df_ces21$issProbInegality21), 0, df_ces
 
 df_ces21$scale_gd_econo[is.nan(df_ces21$scale_gd_econo)] <- NA
 
+hist(df_ces21$scale_gd_econo)
 
 # Environnement -----------------------------------------------------------
 
@@ -121,6 +122,8 @@ df_ces21$scale_enviro <- (ifelse(is.na(df_ces21$issTaxeCarbone21), 0, df_ces21$i
                          ifelse(is.na(df_ces21$issReglEnviroPrix21), 0, df_ces21$issReglEnviroPrix21)) / nnas_enviro
 
 df_ces21$scale_enviro[is.nan(df_ces21$scale_enviro)] <- NA
+
+hist(df_ces21$scale_enviro)
 
 # Immigration -------------------------------------------------------------
 
@@ -136,6 +139,7 @@ df_ces21$scale_immigr <- (ifelse(is.na(df_ces21$issGovSpendImmigr21), 0, df_ces2
 
 df_ces21$scale_immigr[is.nan(df_ces21$scale_immigr)] <- NA
 
+hist(df_ces21$scale_immigr)
 
 # Model enviro ------------------------------------------------------------
 
