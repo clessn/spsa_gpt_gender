@@ -141,8 +141,33 @@ df_ces21$scale_immigr[is.nan(df_ces21$scale_immigr)] <- NA
 
 hist(df_ces21$scale_immigr)
 
+
+# Model gauche-droite -----------------------------------------------------
+
+model_intervention <- lm(scale_gd_econo ~ gender + age + education + income +
+                     province + rurality + visMinWhite +
+                     visMinIndigenous + visMinBlack + visMinAsian +
+                     visMinArab, data = df_ces21)
+
+summary(model_intervention)
+
 # Model enviro ------------------------------------------------------------
 
-model_enviro <- lm(scale_enviro ~ gender + age + education + income)
+model_enviro <- lm(scale_enviro ~ gender + age + education + income +
+                           province + rurality + visMinWhite +
+                           visMinIndigenous + visMinBlack + visMinAsian +
+                           visMinArab, data = df_ces21)
 
 summary(model_enviro)
+
+
+# Model Immigr ------------------------------------------------------------
+
+model_immigr <- lm(scale_immigr ~ gender + age + education + income +
+                     province + rurality + visMinWhite +
+                     visMinIndigenous + visMinBlack + visMinAsian +
+                     visMinArab, data = df_ces21)
+
+summary(model_immigr)
+
+
