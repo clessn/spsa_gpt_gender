@@ -151,6 +151,8 @@ model_intervention <- lm(scale_gd_econo ~ gender + age + education + income +
 
 summary(model_intervention)
 
+saveRDS(model_intervention, "_SharedFolder_spsa_gpt_gender/data/models/intervention.rds")
+
 # Model enviro ------------------------------------------------------------
 
 model_enviro <- lm(scale_enviro ~ gender + age + education + income +
@@ -160,6 +162,7 @@ model_enviro <- lm(scale_enviro ~ gender + age + education + income +
 
 summary(model_enviro)
 
+saveRDS(model_enviro, "_SharedFolder_spsa_gpt_gender/data/models/enviro.rds")
 
 # Model Immigr ------------------------------------------------------------
 
@@ -170,4 +173,4 @@ model_immigr <- lm(scale_immigr ~ gender + age + education + income +
 
 summary(model_immigr)
 
-
+saveRDS(model_immigr, "_SharedFolder_spsa_gpt_gender/data/models/immigr.rds")
