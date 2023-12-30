@@ -135,3 +135,10 @@ df_ces21$scale_immigr <- (ifelse(is.na(df_ces21$issGovSpendImmigr21), 0, df_ces2
                          ifelse(is.na(df_ces21$issIntégrationImmigr21), 0, df_ces21$issIntégrationImmigr21)) / nnas_immigr
 
 df_ces21$scale_immigr[is.nan(df_ces21$scale_immigr)] <- NA
+
+
+# Model enviro ------------------------------------------------------------
+
+model_enviro <- lm(scale_enviro ~ gender + age + education + income)
+
+summary(model_enviro)
