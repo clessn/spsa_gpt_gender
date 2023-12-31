@@ -75,3 +75,34 @@ clean_ses_gpt$enviro_reg_gpt[df_ses_gpt$enviro_reg %in% c("Somewhat agree", "Som
 clean_ses_gpt$enviro_reg_gpt[df_ses_gpt$enviro_reg %in% c("Strongly agree", "Strongly agree\n", "Strongly agree.")] <- 0
 clean_ses_gpt$enviro_reg_gpt[df_ses_gpt$enviro_reg == "Don't know/Prefer not to answer"] <- NA
 table(clean_ses_gpt$enviro_reg_gpt)
+
+#### Variable intervention de l'État ####
+# 0 = gauche 1 = droite
+
+table(df_ses_gpt$rich_gap)
+clean_ses_gpt$rich_gap_gpt <- NA
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap %in% c("Much more", "Much-more")] <- 0
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap %in% c("Somewhat more", "Somewhat-more", "Somewhatmore", "SomewhatMore")] <- 0.25
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap %in% c("About the same as now", "About-the-same-as-now", "Aboutthesameasnow")] <- 0.5
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap == "Somewhat less"] <- 0.75
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap == "Much less"] <- 1
+clean_ses_gpt$rich_gap_gpt[df_ses_gpt$rich_gap == "Don't know/Prefer not to answer"] <- NA
+table(clean_ses_gpt$rich_gap_gpt)
+
+table(df_ses_gpt$ineq_prob)
+clean_ses_gpt$ineq_prob_gpt <- NA
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob %in% c("Definitely yes", "Definitely-yes", "Definitelyyes", " Definitely yes")] <- 0
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob %in% c("Probably yes", " Probably yes", "probably yes", "Probably-yes", "Probablyyes", "ProbablyYes")] <- 0.25
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob %in% c("Not sure", "Not-sure", "Notsure")] <- 0.5
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob %in% c("Probably not", "Probablynot")] <- 0.75
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob == "Definitely not"] <- 1
+clean_ses_gpt$ineq_prob_gpt[df_ses_gpt$ineq_prob == "Don't know/Prefer not to answer"] <- NA
+table(clean_ses_gpt$ineq_prob_gpt)
+
+table(df_ses_gpt$option_priv)
+clean_ses_gpt$option_priv_gpt <- NA
+clean_ses_gpt$option_priv_gpt[df_ses_gpt$option_priv %in% c("See to it that everyone has a decent standard of living", " See to it that everyone has a decent standard of living", "See to it that everyone has a decent standard of living\n", "See to it that everyone has a decent standard of living.", "See-to-it-that-everyone-has-a-decent-standard-of-living", "See-to-itthateveryonehasadecentstandardofliving", "Seetoiteveryonehasadecentstandardofliving", "Seetoitthateveryonehasadecentstandardofliving", "SeeToItThatEveryoneHasADecentStandardOfLiving")] <- 0
+clean_ses_gpt$option_priv_gpt[df_ses_gpt$option_priv %in% c("Leave people to get ahead on their own", "Leave people to get ahead on their own\n", "Leave people to get ahead on their own.", "Leave-people-to-get-ahead-on-their-own", "Leavepeopletogetaheadontheirown", "Leavepoepletogetaheadontheirown", "Leavepoletogaheadontheirown", "Leavepoletogetaheadontheirown", "Leavepropletogetaheadontheirown", "Leavetopeopletogetaheadontheirown.")] <- 1
+clean_ses_gpt$option_priv_gpt[df_ses_gpt$option_priv == "Don't know/Prefer not to answer"] <- NA
+table(clean_ses_gpt$option_priv_gpt)
+
