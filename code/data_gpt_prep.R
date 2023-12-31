@@ -106,3 +106,7 @@ clean_ses_gpt$option_priv_gpt[df_ses_gpt$option_priv %in% c("Leave people to get
 clean_ses_gpt$option_priv_gpt[df_ses_gpt$option_priv == "Don't know/Prefer not to answer"] <- NA
 table(clean_ses_gpt$option_priv_gpt)
 
+
+# Save data as RDS --------------------------------------------------------
+
+saveRDS(clean_ses_gpt, "_SharedFolder_spsa_gpt_gender/data/clean_ses_gpt.rds")
