@@ -14,11 +14,11 @@ GptData <- cbind(GptData, visMin_dummies)
 
 # ICI: faire les échelles GPT ---------------------------------------------
 
-scale_intervention <- (GptData$rich_gap_gpt + GptData$ineq_prob_gpt + GptData$option_priv_gpt) / 3
+GptData$scale_intervention <- (GptData$rich_gap_gpt + GptData$ineq_prob_gpt + GptData$option_priv_gpt) / 3
 
-scale_enviro <- (GptData$reduce_emi_gpt + GptData$cont_carb_tax_gpt + GptData$enviro_reg_gpt) / 3
+GptData$scale_enviro <- (GptData$reduce_emi_gpt + GptData$cont_carb_tax_gpt + GptData$enviro_reg_gpt) / 3
 
-scale_immigr <- (GptData$fed_spend_gpt + GptData$recent_immi_gpt + GptData$immi_take_jobs_gpt) / 3
+GptData$scale_immigr <- (GptData$fed_spend_gpt + GptData$recent_immi_gpt + GptData$immi_take_jobs_gpt) / 3
 
 # Real world models ------------------------------------------------------------------
 
