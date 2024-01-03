@@ -14,17 +14,20 @@ GptData <- cbind(GptData, visMin_dummies)
 
 # ICI: faire les échelles GPT ---------------------------------------------
 
-GptData$scale_intervention <- (GptData$rich_gap_gpt + GptData$ineq_prob_gpt + GptData$option_priv_gpt) / 3
+GptData$gpt_intervention <- (GptData$rich_gap_gpt + GptData$ineq_prob_gpt + GptData$option_priv_gpt) / 3
 
-GptData$scale_enviro <- (GptData$reduce_emi_gpt + GptData$cont_carb_tax_gpt + GptData$enviro_reg_gpt) / 3
+GptData$gpt_enviro <- (GptData$reduce_emi_gpt + GptData$cont_carb_tax_gpt + GptData$enviro_reg_gpt) / 3
 
-GptData$scale_immigr <- (GptData$fed_spend_gpt + GptData$recent_immi_gpt + GptData$immi_take_jobs_gpt) / 3
+GptData$gpt_immigr <- (GptData$fed_spend_gpt + GptData$recent_immi_gpt + GptData$immi_take_jobs_gpt) / 3
 
 # Real world models ------------------------------------------------------------------
 
 model_intervention <- readRDS("_SharedFolder_spsa_gpt_gender/data/models/intervention.rds")
 model_enviro <- readRDS("_SharedFolder_spsa_gpt_gender/data/models/enviro.rds")
 model_immigr <- readRDS("_SharedFolder_spsa_gpt_gender/data/models/immigr.rds")
+
+predict(object = model_enviro, newdata = GptData[1,])
+predict(object = model_enviro, newdata = GptData[2,])
 
 # Predict real world models on GptData -----------------------------------------------
 # Intervention où 0 = gauche et 1 = droit
@@ -66,7 +69,44 @@ ggplot(GptData, aes(x = pred_immigr)) +
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/GPTData$pred_immigr.png", height = 10, width = 12)
 
-## prédictions du modèle sur la grille
+# Croiser les prédictions de gpt et des modèles ---------------------------
 
+ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(GptData, aes(x = pred_immigr, y = scale_immigr)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(GptData, aes(x = pred_intervention, y = scale_intervention)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~gender)
+
+ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~visMin)
+
+ggplot(GptData, aes(x = pred_immigr, y = scale_immigr)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~visMin)
+
+# Créer une VD par échelle qui est la différence (biais) entre les deux modèles -------
+
+## créer différence
+
+## créer une différence absolue avec abs()
+#abs(c(-5, 7, -2))
+#GptData$scale_abs <- abs(GptData$scale)
+
+
+# Faire un modèle de régression avec les VIs et les contrôles -------------
 
 
