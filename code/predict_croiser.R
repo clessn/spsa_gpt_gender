@@ -73,29 +73,29 @@ ggsave("_SharedFolder_spsa_gpt_gender/graph/GPTData$pred_immigr.png", height = 1
 
 # Croiser les prédictions de gpt et des modèles ---------------------------
 
-ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+ggplot(GptData, aes(x = pred_enviro, y = gpt_enviro)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-ggplot(GptData, aes(x = pred_immigr, y = scale_immigr)) +
+ggplot(GptData, aes(x = pred_immigr, y = gpt_immigr)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-ggplot(GptData, aes(x = pred_intervention, y = scale_intervention)) +
+ggplot(GptData, aes(x = pred_intervention, y = gpt_intervention)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+ggplot(GptData, aes(x = pred_enviro, y = gpt_enviro)) +
   geom_point() +
   geom_smooth(method = "lm") +
   facet_wrap(~gender)
 
-ggplot(GptData, aes(x = pred_enviro, y = scale_enviro)) +
+ggplot(GptData, aes(x = pred_enviro, y = gpt_enviro)) +
   geom_point() +
   geom_smooth(method = "lm") +
   facet_wrap(~visMin)
 
-ggplot(GptData, aes(x = pred_immigr, y = scale_immigr)) +
+ggplot(GptData, aes(x = pred_immigr, y = gpt_immigr)) +
   geom_point() +
   geom_smooth(method = "lm") +
   facet_wrap(~visMin)
@@ -117,33 +117,33 @@ GptData$abs_diff_pred_immigr <- abs(GptData$gpt_immigr - GptData$pred_immigr)
 
 # Faire un modèle de régression avec les VIs et les contrôles -------------
 
-model_multi_intervention <- lm(diff_pred_intervention ~ gender + age + education + income +
-                            province + rurality + visMin, data = GptData)
+model_multi_intervention <- lm(diff_pred_intervention ~ gender * visMin + age + education + income +
+                            province + rurality, data = GptData)
 
 summary(model_multi_intervention)
 
-model_multi_abs_intervention <- lm(abs_diff_pred_intervention ~ gender + age + education + income +
-                                 province + rurality + visMin, data = GptData)
+model_multi_abs_intervention <- lm(abs_diff_pred_intervention ~ gender * visMin + age + education + income +
+                                 province + rurality, data = GptData)
 
 summary(model_multi_abs_intervention)
 
-model_multi_enviro <- lm(diff_pred_enviro ~ gender + age + education + income +
-                           province + rurality + visMin, data = GptData)
+model_multi_enviro <- lm(diff_pred_enviro ~ gender * visMin + age + education + income +
+                           province + rurality, data = GptData)
 
 summary(model_multi_enviro)
 
-model_multi_abs_enviro <- lm(abs_diff_pred_enviro ~ gender + age + education + income +
-                           province + rurality + visMin, data = GptData)
+model_multi_abs_enviro <- lm(abs_diff_pred_enviro ~ gender * visMin + age + education + income +
+                           province + rurality, data = GptData)
 
 summary(model_multi_abs_enviro)
 
-model_multi_immigr <- lm(diff_pred_immigr ~ gender + age + education + income +
-                           province + rurality + visMin, data = GptData)
+model_multi_immigr <- lm(diff_pred_immigr ~ gender * visMin + age + education + income +
+                           province + rurality, data = GptData)
 
 summary(model_multi_immigr)
 
-model_multi_abs_immigr <- lm(abs_diff_pred_immigr ~ gender + age + education + income +
-                           province + rurality + visMin, data = GptData)
+model_multi_abs_immigr <- lm(abs_diff_pred_immigr ~ gender * visMin + age + education + income +
+                           province + rurality, data = GptData)
 
 summary(model_multi_abs_immigr)
 
@@ -152,36 +152,39 @@ summary(model_multi_abs_immigr)
 
 ## Prédire les biais absolus selon les visMin
 
-graphdataabsvismin <- rbind(predictions(model_multi_abs_intervention, by = "visMin"),
-                   predictions(model_multi_abs_enviro, by = "visMin"),
-                   predictions(model_multi_abs_immigr, by = "visMin")) %>% 
+graphdataabsvismin <- rbind(predictions(model_multi_abs_intervention, by = "visMin",
+                                        conf_level = 0.99) ,
+                   predictions(model_multi_abs_enviro, by = "visMin", conf_level = 0.99),
+                   predictions(model_multi_abs_immigr, by = "visMin", conf_level = 0.99)) %>% 
   mutate(id = c(rep('intervention', times = 5),
                 rep('enviro', times = 5),
                 rep('immigr', times = 5))) 
 
 ## Prédire les biais selon les visMin
 
-graphdatavismin <- rbind(predictions(model_multi_intervention, by = "visMin"),
-                         predictions(model_multi_enviro, by = "visMin"),
-                         predictions(model_multi_immigr, by = "visMin")) %>% 
+graphdatavismin <- rbind(predictions(model_multi_intervention, by = "visMin", 
+                                     conf_level = 0.99),
+                         predictions(model_multi_enviro, by = "visMin", conf_level = 0.99),
+                         predictions(model_multi_immigr, by = "visMin", conf_level = 0.99)) %>% 
   mutate(id = c(rep('intervention', times = 5),
                 rep('enviro', times = 5),
                 rep('immigr', times = 5))) 
 
 ## Prédire les biais absolus selon le genre
 
-graphdataabsgender <- rbind(predictions(model_multi_abs_intervention, by = "gender"),
-                   predictions(model_multi_abs_enviro, by = "gender"),
-                   predictions(model_multi_abs_immigr, by = "gender")) %>% 
+graphdataabsgender <- rbind(predictions(model_multi_abs_intervention, by = "gender",
+                                        conf_level = 0.99),
+                   predictions(model_multi_abs_enviro, by = "gender", conf_level = 0.99),
+                   predictions(model_multi_abs_immigr, by = "gender", conf_level = 0.99)) %>% 
   mutate(id = c(rep('intervention', times = 2),
                 rep('enviro', times = 2),
                 rep('immigr', times = 2))) 
 
 ## Prédire les biais selon le genre
 
-graphdatagender <- rbind(predictions(model_multi_intervention, by = "gender"),
-                         predictions(model_multi_enviro, by = "gender"),
-                         predictions(model_multi_immigr, by = "gender")) %>% 
+graphdatagender <- rbind(predictions(model_multi_intervention, by = "gender", conf_level = 0.99),
+                         predictions(model_multi_enviro, by = "gender", conf_level = 0.99),
+                         predictions(model_multi_immigr, by = "gender", conf_level = 0.99)) %>% 
   mutate(id = c(rep('intervention', times = 2),
                 rep('enviro', times = 2),
                 rep('immigr', times = 2))) 
@@ -196,10 +199,10 @@ ggplot(data = graphdataabsvismin, aes(x = visMin, y = estimate)) +
   geom_point() +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2, color = "black", alpha = 0.7) +
   clessnverse::theme_clean_light() +
-  labs(x = "Minorités Visibles", y = "Biais Absolus Prédits") +
+  labs(x = "Race", y = "Absolute differences", title = "Absolute differences between GPT-4 prediction and real-world data by race") +
   facet_wrap(~ id)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/absolute_biases_vismin_predicted.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/absolute_biases_vismin_predicted.png", width = 12, height = 6)
   
 ## Graphiques absolus selon le gender
 
@@ -207,10 +210,10 @@ ggplot(data = graphdataabsgender, aes(x = gender, y = estimate)) +
   geom_point() +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2, color = "black", alpha = 0.7) +
   clessnverse::theme_clean_light() +
-  labs(x = "Genres", y = "Biais Absolus Prédits") +
+  labs(x = "Gender", y = "Absolute differences", title = "Absolute differences between GPT-4 prediction and real-world data by gender") +
   facet_wrap(~ id)
   
-ggsave("_SharedFolder_spsa_gpt_gender/graph/absolute_biases_gender_predicted.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/absolute_biases_gender_predicted.png", width = 12, height = 6)
 
 ## Graphiques biais selon les vismin
 
@@ -220,10 +223,10 @@ ggplot(data = graphdatavismin, aes(x = estimate, y = visMin)) +
   geom_vline(xintercept = 0, color = "black") +
   clessnverse::theme_clean_light() +
   scale_x_continuous(limits = c(-1, 1)) +
-  labs(x = "Biais Prédits", y = "Minorités Visibles", title = "Biais selon les minorités visibles") +
+  labs(x = "Differences (non-absolute)", y = "Race", title = "Differences between GPT-4 prediction and real-world data by race") +
   facet_wrap(~ id)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_vismin.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_vismin.png", width = 12, height = 6)
 
 ## Graphiques biais selon le genre
 
@@ -233,10 +236,10 @@ ggplot(data = graphdatagender, aes(x = estimate, y = gender)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Genres", title = "Biais selon le genre") +
+  labs(x = "Differences (non-absolute)", y = "Gender", title = "Differences between GPT-4 prediction and real-world data by gender") +
   facet_wrap(~ id)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_gender.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_gender.png", width = 12, height = 6)
 
 
 # Graphiques intervention de l'État ---------------------------------------
@@ -250,9 +253,9 @@ ggplot(data = filtered_intervention_vismin, aes(x = estimate, y = visMin)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Minorités Visibles", title = "Biais selon les minorités visibles sur l'intervention de l'État")
+  labs(x = "Differences (non-absolute)", y = "Race", title = "Differences between GPT-4 prediction and real-world data on State intervention scale by race")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_intervention_vismin.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_intervention_vismin.png", width =  12, height = 6)
 
 ggplot(data = filtered_intervention_gender, aes(x = estimate, y = gender)) +
   geom_point() +
@@ -260,9 +263,9 @@ ggplot(data = filtered_intervention_gender, aes(x = estimate, y = gender)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Genres", title = "Biais selon le genre sur l'intervention de l'État")
+  labs(x = "Differences (non-absolute)", y = "Gender", title = "Differences between GPT-4 prediction and real-world data on State intervention scale by gender")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_intervention_gender.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_intervention_gender.png", width = 12, height = 6)
 
 
 # Graphiques enviro -------------------------------------------------------
@@ -276,9 +279,9 @@ ggplot(data = filtered_enviro_vismin, aes(x = estimate, y = visMin)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Minorités Visibles", title = "Biais selon les minorités visibles sur l'environnement")
+  labs(x = "Differences (non-absolute)", y = "Race", title = "Differences between GPT-4 prediction and real-world data on environnement's scale by race")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_enviro_vismin.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_enviro_vismin.png", width = 12, height = 6)
 
 ggplot(data = filtered_enviro_gender, aes(x = estimate, y = gender)) +
   geom_point() +
@@ -286,9 +289,9 @@ ggplot(data = filtered_enviro_gender, aes(x = estimate, y = gender)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Genres", title = "Biais selon le genre sur l'environnement")
+  labs(x = "Differences (non-absolute)", y = "Gender", title = "Differences between GPT-4 prediction and real-world data on environnement's scale by gender")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_enviro_gender.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_enviro_gender.png", width = 12, height = 6)
 
 
 # Graphiques immigr -------------------------------------------------------
@@ -302,17 +305,9 @@ ggplot(data = filtered_immigr_vismin, aes(x = estimate, y = visMin)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Minorités Visibles", title = "Biais selon les minorités visibles sur l'immigration")
+  labs(x = "Differences (non-absolute)", y = "Race", title = "Differences between GPT-4 prediction and real-world data on immigration's scale by race")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_immigr_vismin.png", width = 8, height = 6)
-
-ggplot(data = filtered_immigr_gender, aes(x = estimate, y = gender)) +
-  geom_point() +
-  geom_linerange(aes(xmin = conf.low, xmax = conf.high), color = "black", alpha = 0.7) +
-  geom_vline(xintercept = 0, color = "black") +
-  scale_x_continuous(limits = c(-1, 1)) +
-  clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Genres", title = "Biais selon le genre sur l'immigration")
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_immigr_vismin.png", width = 12, height = 6)
 
 ggplot(data = filtered_immigr_gender, aes(x = estimate, y = gender)) +
   geom_point() +
@@ -320,10 +315,55 @@ ggplot(data = filtered_immigr_gender, aes(x = estimate, y = gender)) +
   geom_vline(xintercept = 0, color = "black") +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
-  labs(x = "Biais Prédits", y = "Genres", title = "Biais selon le genre sur l'immigration") +
-  annotate("text", x = -1, y = 0.5, label = "Ne supporte pas l'immigration", hjust = 0, vjust = 0.5, color = "black") +
-  annotate("text", x = 1, y = 0.5, label = "Supporte l'immigration", hjust = 1, vjust = 0.5, color = "black")
+  labs(x = "Differences (non-absolute)", y = "Gender", title = "Differences between GPT-4 prediction and real-world data on immigration's scale by race") +
+  annotate("text", x = -1, y = 0.5, label = "Support immigration", hjust = 0, vjust = 0.5, color = "black") +
+  annotate("text", x = 1, y = 0.5, label = "Doesn't support immigration", hjust = 1, vjust = 0.5, color = "black")
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/biases_immigr_gender.png", width = 8, height = 6)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_immigr_gender.png", width = 12, height = 6)
+
+# Graphiques intersectionnalité -------------------------------------------
+
+# Intervention
+
+dataintersectionality_intervention <- predictions(model_multi_abs_intervention, by = c("gender", "visMin"))
+
+ggplot(data = dataintersectionality_intervention, aes(x = estimate, y = visMin, color = gender)) +
+  geom_point() +
+  geom_linerange(aes(xmin = conf.low, xmax = conf.high), color = "black", alpha = 0.7) +
+  geom_vline(xintercept = 0, color = "black") +
+  scale_x_continuous(limits = c(-1, 1)) +
+  clessnverse::theme_clean_light() +
+  labs(x = "Absolute differences", y = "Race", title = "Absolute differences between GPT-4 prediction and real-world data on State intervention's scale")
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_intervention_intersectional.png", width = 12, height = 6)
+
+# Environnement
+
+dataintersectionality_enviro <- predictions(model_multi_abs_enviro, by = c("gender", "visMin"))
+
+ggplot(data = dataintersectionality_enviro, aes(x = estimate, y = visMin, color = gender)) +
+  geom_point() +
+  geom_linerange(aes(xmin = conf.low, xmax = conf.high), color = "black", alpha = 0.7) +
+  geom_vline(xintercept = 0, color = "black") +
+  scale_x_continuous(limits = c(-1, 1)) +
+  clessnverse::theme_clean_light() +
+  labs(x = "Absolute differences", y = "Race", title = "Absolute differences between GPT-4 prediction and real-world data on Environement's scale")
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_enviro_intersectional.png", width = 12, height = 6)
+
+# Immigration
+
+dataintersectionality_immigr <- predictions(model_multi_abs_immigr, by = c("gender", "visMin"))
+
+ggplot(data = dataintersectionality_immigr, aes(x = estimate, y = visMin, color = gender)) +
+  geom_point() +
+  geom_linerange(aes(xmin = conf.low, xmax = conf.high), color = "black", alpha = 0.7) +
+  geom_vline(xintercept = 0, color = "black") +
+  scale_x_continuous(limits = c(-1, 1)) +
+  clessnverse::theme_clean_light() +
+  labs(x = "Absolute differences", y = "Race", title = "Absolute differences between GPT-4 prediction and real-world data on Immigration's scale")
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_immigr_intersectional.png", width = 12, height = 6)
+
 
   
