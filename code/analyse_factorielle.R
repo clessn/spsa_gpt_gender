@@ -28,15 +28,15 @@ topdown_fa <- function(df, nfactors = 1) {
     geom_text(aes(label=as.character(round(factorLoadings, 
                                            digits = 2))), vjust=0.35, hjust=-0.3, size = 5) +
     geom_hline(yintercept=0.3, colour="gray", linetype = "longdash") +
-    annotate("text", label=paste("Alpha de Cronbach =", as.character(cronbachAlpha)), 
+    annotate("text", label=paste("Cronbach Alpha =", as.character(cronbachAlpha)), 
              x=1.1, y=1.28, size=5) +
-    annotate("text", label=paste("Première valeur propre =", as.character(factor1stEigen)), 
+    annotate("text", label=paste("First eigenvalue =", as.character(factor1stEigen)), 
              x=0.75, y=1.28, size=5) +
     annotate("segment", x = 0.4, xend = 1.45, 
              y = 1, yend = 1, colour = "black") +
     annotate("segment", x = 1.45, xend = 1.45, 
              y = 1, yend = Inf, colour = "black") +
-    scale_y_continuous(name="\n Coefficients de saturation \n", 
+    scale_y_continuous(name="\n Factor loadings \n", 
                        limits=c(0, 1.55), breaks=seq(0, 1, by=0.1),
                        expand = c(0,0)) +
     xlab("\n") + 
@@ -49,18 +49,26 @@ topdown_fa <- function(df, nfactors = 1) {
           panel.grid=element_blank())
   print(FAplot)
   print("What we want:")
-  print(paste0("Alpha de Cronbach > 0.6 -> ",cronbachAlpha))
-  print(paste0("Première Valeur Propre > 1 -> ",factor1stEigen))
-  print(paste0("Tous les coefficients de saturation > 0.3"))
+  print(paste0("Cronbach Alpha > 0.6 -> ",cronbachAlpha))
+  print(paste0("First eigenvalue > 1 -> ",factor1stEigen))
+  print(paste0("Factor loadings > 0.3"))
 }
 
 # Tester les questions : Gauche-droite économique
 
 df_gd_econo <- CES21 %>% 
   select(issStopSubv21, issGapRichPoor21, issProbInegality21, issGovShouldDoStdOfLiving21) %>%
-  drop_na()
+  drop_na() %>%
+  rename(
+    "The federal government should \n end all corporate and economic\n development subsidies." = issStopSubv21,
+    "How much do you think should \n be done to reduce the gap between\n the rich and the poor in Canada?" = issGapRichPoor21,
+    "Is income inequality a \n big problem in Canada?" = issProbInegality21,
+    "The government should:\nSee to it that everyone has a \n decent standard of living;\n or leave people to \n get ahead on their own;" = issGovShouldDoStdOfLiving21
+  )
 
-topdown_fa(df_gd_econo)
+factor_analysis_intervention <- topdown_fa(df_gd_econo)
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_intervention.png", width = 14, height = 10)
 
 ggplot(mtcars, aes(x = mpg)) + 
   geom_histogram()
@@ -68,18 +76,24 @@ ggplot(mtcars, aes(x = mpg)) +
 # Tester les questions : Environnement
 
 df_enviro <- CES21 %>% 
-  select(issSpendEnviro21, issTaxeCarbone21, issConstructionOleoducs21, issReglEnviroPrix21, issEnviroJob21, issTaxeCarboneII21, issChangeClim21) %>% 
-  drop_na()
+  select(issSpendEnviro21, issTaxeCarbone21, issConstructionOleoducs21, issReglEnviroPrix21, issEnviroJob21, issChangeClim21) %>% 
+  drop_na() %>% 
+  rename( "How much should \n the federal government \n spend on the environment?" = issSpendEnviro21, "To help reduce greenhouse gas \n emissions, the federal government \n should continue the carbon tax." = issTaxeCarbone21, "The federal government should \n do more to help Canada’s energy \n sector, including building \n oil pipelines." = issConstructionOleoducs21, "Environmental regulation should \n be stricter, even if it \n leads to consumers having \n to pay higher prices." = issReglEnviroPrix21, "When there is a conflict between \n protecting the environment and \ncreating jobs, jobs should come first." = issEnviroJob21, "Do you think \n that climate change \n is happening?" = issChangeClim21)
 
-topdown_fa(df=df_enviro)
+factor_analysis_enviro <- topdown_fa(df=df_enviro)
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_enviro.png", width = 14, height = 10)
 
 # Tester les questions : Immigration
 
 df_immigr <- CES21 %>% 
   select(issGovSpendImmigr21, issNumberImmigr21, issNumberRefugees21, issIntégrationImmigr21, issImmigrEnleveJobs21) %>% 
-  drop_na()
+  drop_na() %>% 
+  rename("How much should \n the federal government \n spend on immigrants \n and minorities?" = issGovSpendImmigr21, "Do you think Canada should admit: \n More immigrants; \n Fewer immigrants; \n About the same number \n of immigrants as now" = issNumberImmigr21, "Do you think Canada should admit: \n More refugees;\n Fewer refugees; \n About the same number \n of refugees as now" = issNumberRefugees21, "Too many recent immigrants \n just don't want to fit \n in to Canadian society." = issIntégrationImmigr21, "Immigrants take jobs \n away from other Canadians." = issImmigrEnleveJobs21)
 
-topdown_fa(df=df_immigr)
+factor_analysis_immigr <- topdown_fa(df=df_immigr)
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_immigr.png", width = 14, height = 10)
 
 # Échelle Gauche-droite économique ####
 
