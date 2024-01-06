@@ -144,10 +144,15 @@ hist(df_ces21$scale_immigr)
 
 # Model gauche-droite -----------------------------------------------------
 
-model_intervention <- lm(scale_gd_econo ~ gender + age + education + income +
-                     province + rurality + visMinWhite +
-                     visMinIndigenous + visMinBlack + visMinAsian +
-                     visMinArab, data = df_ces21)
+model_intervention <- lm(scale_gd_econo ~
+                           gender * visMinBlack +
+                           gender * visMinWhite +
+                           gender * visMinIndigenous +
+                           gender * visMinAsian +
+                           gender * visMinArab +
+                         age + education + income +
+                     province + rurality,
+                     data = df_ces21)
 
 summary(model_intervention)
 
@@ -155,10 +160,14 @@ saveRDS(model_intervention, "_SharedFolder_spsa_gpt_gender/data/models/intervent
 
 # Model enviro ------------------------------------------------------------
 
-model_enviro <- lm(scale_enviro ~ gender + age + education + income +
-                           province + rurality + visMinWhite +
-                           visMinIndigenous + visMinBlack + visMinAsian +
-                           visMinArab, data = df_ces21)
+model_enviro <- lm(scale_enviro ~
+                     gender * visMinBlack +
+                     gender * visMinWhite +
+                     gender * visMinIndigenous +
+                     gender * visMinAsian +
+                     gender * visMinArab +
+                     age + education + income +
+                     province + rurality, data = df_ces21)
 
 summary(model_enviro)
 
@@ -166,10 +175,14 @@ saveRDS(model_enviro, "_SharedFolder_spsa_gpt_gender/data/models/enviro.rds")
 
 # Model Immigr ------------------------------------------------------------
 
-model_immigr <- lm(scale_immigr ~ gender + age + education + income +
-                     province + rurality + visMinWhite +
-                     visMinIndigenous + visMinBlack + visMinAsian +
-                     visMinArab, data = df_ces21)
+model_immigr <- lm(scale_immigr ~
+                     gender * visMinBlack +
+                     gender * visMinWhite +
+                     gender * visMinIndigenous +
+                     gender * visMinAsian +
+                     gender * visMinArab +
+                     age + education + income +
+                     province + rurality, data = df_ces21)
 
 summary(model_immigr)
 

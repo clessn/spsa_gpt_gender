@@ -1,7 +1,7 @@
 # Packages -----------------------------------------------------------------
 library(tidyverse)
 library(ggplot2)
-install.packages("marginaleffects")
+#install.packages("marginaleffects")
 library(marginaleffects)
 
 # Data --------------------------------------------------------------------
@@ -42,7 +42,6 @@ ggplot(GptData, aes(x = pred_intervention)) +
   clessnverse::theme_clean_light() +
   labs(title = "Histogramme de pred_intervention")
   
-
 ggsave("_SharedFolder_spsa_gpt_gender/graph/GPTData$pred_intervention.png", height = 10, width = 12)
 
 # Environnement où 0 = Attitudes environnementales positives et 1 = Attitudes environnementales négatives
