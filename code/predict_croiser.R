@@ -118,32 +118,32 @@ GptData$abs_diff_pred_immigr <- abs(GptData$gpt_immigr - GptData$pred_immigr)
 
 model_multi_intervention <- lm(diff_pred_intervention ~ gender * visMin + age + education + income +
                             province + rurality, data = GptData)
-
+saveRDS(model_multi_intervention, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/intervention.rds")
 summary(model_multi_intervention)
 
 model_multi_abs_intervention <- lm(abs_diff_pred_intervention ~ gender * visMin + age + education + income +
                                  province + rurality, data = GptData)
-
+saveRDS(model_multi_abs_intervention, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/abs_intervention.rds")
 summary(model_multi_abs_intervention)
 
 model_multi_enviro <- lm(diff_pred_enviro ~ gender * visMin + age + education + income +
                            province + rurality, data = GptData)
-
+saveRDS(model_multi_enviro, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/enviro.rds")
 summary(model_multi_enviro)
 
 model_multi_abs_enviro <- lm(abs_diff_pred_enviro ~ gender * visMin + age + education + income +
                            province + rurality, data = GptData)
-
+saveRDS(model_multi_abs_enviro, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/abs_enviro.rds")
 summary(model_multi_abs_enviro)
 
 model_multi_immigr <- lm(diff_pred_immigr ~ gender * visMin + age + education + income +
                            province + rurality, data = GptData)
-
+saveRDS(model_multi_immigr, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/immigr.rds")
 summary(model_multi_immigr)
 
 model_multi_abs_immigr <- lm(abs_diff_pred_immigr ~ gender * visMin + age + education + income +
                            province + rurality, data = GptData)
-
+saveRDS(model_multi_abs_immigr, "_SharedFolder_spsa_gpt_gender/data/models/predict_difference/abs_immigr.rds")
 summary(model_multi_abs_immigr)
 
 
