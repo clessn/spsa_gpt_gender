@@ -56,3 +56,4 @@ ggplot(Data, aes(x = scale_position, y = scale)) +
                                 quantiles = c(0.25, 0.5, 0.75),
                                 scale = 0.5) + ## changer ça pour empiler ou non les densités l'une sur l'autre
   labs(caption = "Lines in the densities show the 25th, 50th and 75th centiles of the distributions.")
+

@@ -188,7 +188,7 @@ ggplot(GraphRaw, aes(x = estimate, y = visMin)) +
             aes(y = 0, label = right),
             size = 3.5) +
   scale_x_continuous(limits = c(-0.4, 0.4)) +
-  scale_y_discrete(expand = c(0.25, 0.25)) +
+  scale_y_discrete(expand = c(0.50, 0.50)) +
   clessnverse::theme_clean_light() +
   ylab("") +
   labs(caption = "Lines around points represent the 99% confidence interval.\nA point left of 0 suggests GPT predicted a more left-leaning stance than the CES model.") +
