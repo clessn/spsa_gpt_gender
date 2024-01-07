@@ -156,12 +156,12 @@ labels <- data.frame(
   id = c('Government\nintervention',
          'Environment',
          'Immigration'),
-  left = c("More intervention",
+  left = c("More State's intervention",
            "Environmental action",
-           "Less immigration"),
-  right = c("Less intervention",
+           "Positive view of immigration"),
+  right = c("Less State's intervention",
             "Environmental inaction",
-            "More immigration")
+            "Negative view of immigration")
 )
 
 ggplot(GraphRaw, aes(x = estimate, y = visMin)) +
@@ -196,4 +196,4 @@ ggplot(GraphRaw, aes(x = estimate, y = visMin)) +
   theme(axis.title.x = element_text(hjust = 0.5))
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_raw_diff.png",
-       width = 9, height = 8)
+       width = 12, height = 8)

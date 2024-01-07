@@ -315,7 +315,7 @@ ggplot(data = filtered_immigr_gender, aes(x = estimate, y = gender)) +
   scale_x_continuous(limits = c(-1, 1)) +
   clessnverse::theme_clean_light() +
   labs(x = "Differences (non-absolute)", y = "Gender", title = "Differences between GPT-4 prediction and real-world data on immigration's scale by race") +
-  annotate("text", x = -1, y = 0.5, label = "Support immigration", hjust = 0, vjust = 0.5, color = "black") +
+  annotate("text", x = -1, y = 0.5, label = "Support immgiration", hjust = 0, vjust = 0.5, color = "black") +
   annotate("text", x = 1, y = 0.5, label = "Doesn't support immigration", hjust = 1, vjust = 0.5, color = "black")
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_immigr_gender.png", width = 12, height = 6)

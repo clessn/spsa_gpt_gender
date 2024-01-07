@@ -38,15 +38,10 @@ ggplot(Data, aes(x = scale_position, y = scale)) +
                                 alpha = 0.7) + 
   clessnverse::theme_clean_light() + 
   labs(caption = "Lines in the densities show the 25th, 50th and 75th centiles of the distributions.", title = "Distribution of CES Respondents",
-       x = "",
-       y = "Scale") +
-  theme(axis.title.y = element_text(hjust = 0.5), axis.title.x = element_text(hjust = 0.5),) + scale_y_discrete(labels = c("Intervention", "Environment", "Immigration")) +
-  geom_text(data = labelsx, y = 0, x = -0.35,
-            aes(y = 0, label = left),
-            size = 3.5) +
-  geom_text(data = labelsx, y = 0, x = 0.35,
-            aes(y = 0, label = right),
-            size = 3.5) 
+       x = "", y = "Scale") +
+  theme(axis.title.y = element_text(hjust = 0.5), plot.title = element_text(hjust = 0.5)) + scale_y_discrete(labels = c("Intervention", "Environment", "Immigration")) +
+  annotate("text", x = 0, y = 0, label = "Positive view of immigration\n Environmental Action\n More State's intervention", hjust = 0, vjust = -0.5, color = "black") +
+  annotate("text", x = 1, y = 0, label = "Negative view of immigration\n Environmental Inction\n Less State's intervention", hjust = 1, vjust = -0.5, color = "black")
   
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/distribution_real_data_scales.png", height = 8, width = 12)
 
