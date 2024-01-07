@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # Loading data ------------------------------------------------------------
-CES21 <- read.csv ("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2023-11-20.csv")
+CES21 <- read.csv ("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2024-01-07.csv")
 
 # Custom functions --------------------------------------------------------
 topdown_fa <- function(df, nfactors = 1) {
@@ -68,7 +68,7 @@ df_gd_econo <- CES21 %>%
 
 factor_analysis_intervention <- topdown_fa(df_gd_econo)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_intervention.png", width = 14, height = 10)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/factor_analysis_intervention.png", width = 14, height = 10)
 
 ggplot(mtcars, aes(x = mpg)) + 
   geom_histogram()
@@ -82,7 +82,7 @@ df_enviro <- CES21 %>%
 
 factor_analysis_enviro <- topdown_fa(df=df_enviro)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_enviro.png", width = 14, height = 10)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/factor_analysis_enviro.png", width = 14, height = 10)
 
 # Tester les questions : Immigration
 
@@ -93,7 +93,7 @@ df_immigr <- CES21 %>%
 
 factor_analysis_immigr <- topdown_fa(df=df_immigr)
 
-ggsave("_SharedFolder_spsa_gpt_gender/graph/factor_analysis_immigr.png", width = 14, height = 10)
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/factor_analysis_immigr.png", width = 14, height = 10)
 
 # Échelle Gauche-droite économique ####
 

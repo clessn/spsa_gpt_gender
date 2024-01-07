@@ -57,7 +57,7 @@ ggplot(GptData, aes(x = pred_enviro)) +
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/GPTData$pred_enviro.png", height = 10, width = 12)
 
-# Immigration où 0 = Pour l'immigration et 0 = Contre l'immigration
+# Immigration où 0 = Pour l'immigration et 1 = Contre l'immigration
 
 GptData$pred_immigr <- predict(object = model_immigr,
                                newdata = GptData)
@@ -363,6 +363,7 @@ ggplot(data = dataintersectionality_immigr, aes(x = estimate, y = visMin, color 
   labs(x = "Absolute differences", y = "Race", title = "Absolute differences between GPT-4 prediction and real-world data on Immigration's scale")
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/À présenter/biases_immigr_intersectional.png", width = 12, height = 6)
+
 
 
   

@@ -4,7 +4,7 @@ library(sondr)
 
 # Load data ---------------------------------------------------------------
 
-df_ses_gpt <- sondr::read_any_csv("/Users/sarah-janevincent/Dropbox/CLESSN/spsa_gpt_gender/_SharedFolder_spsa_gpt_gender/data/questions/df_ses_gpt.csv")
+df_ses_gpt <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/questions/df_ses_gpt.csv")
 
 
 # Clean dataset -----------------------------------------------------------

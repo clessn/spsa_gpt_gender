@@ -1,6 +1,7 @@
 # Packages ----------------------------------------------------------------
 library(dplyr)
 library(ggplot2)
+library(clessnverse)
 
 
 # Data --------------------------------------------------------------------
@@ -19,12 +20,35 @@ Data <- rbind(intervention, enviro, immigr)
 
 
 # Graph -------------------------------------------------------------------
+labelsx <- data.frame(left = c("More intervention",
+           "Environmental action",
+           "Less immigration"),
+  right = c("Less intervention",
+            "Environmental inaction",
+            "More immigration")
+)
+
 
 ggplot(Data, aes(x = scale_position, y = scale)) +
   ggridges::geom_density_ridges(quantile_lines = TRUE,
                                 quantiles = c(0.25, 0.5, 0.75),
-                                scale = 3) + ## changer ça pour empiler ou non les densités l'une sur l'autre
-  labs(caption = "Lines in the densities show the 25th, 50th and 75th centiles of the distributions.")
+                                scale = 3,
+                                fill = "#69b3a2",
+                                color = "white",
+                                alpha = 0.7) + 
+  clessnverse::theme_clean_light() + 
+  labs(caption = "Lines in the densities show the 25th, 50th and 75th centiles of the distributions.", title = "Distribution of CES Respondents",
+       x = "",
+       y = "Scale") +
+  theme(axis.title.y = element_text(hjust = 0.5), axis.title.x = element_text(hjust = 0.5),) + scale_y_discrete(labels = c("Intervention", "Environment", "Immigration")) +
+  geom_text(data = labelsx, y = 0, x = -0.35,
+            aes(y = 0, label = left),
+            size = 3.5) +
+  geom_text(data = labelsx, y = 0, x = 0.35,
+            aes(y = 0, label = right),
+            size = 3.5) 
+  
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/distribution_real_data_scales.png", height = 8, width = 12)
 
 ggplot(Data, aes(x = scale_position, y = scale)) +
   ggridges::geom_density_ridges(quantile_lines = TRUE,

@@ -14,8 +14,7 @@ m_abs_immigr <- readRDS("_SharedFolder_spsa_gpt_gender/data/models/predict_diffe
 
 # Predire les biais absolus selon les 2 VI: gender et visMin ----------------------
 
-GraphAbs <-
-  rbind(
+GraphAbs <- rbind(
     predictions(m_abs_intervention, by = c("gender", "visMin"), conf_level = 0.99) ,
     predictions(m_abs_enviro, by = c("gender", "visMin"), conf_level = 0.99),
     predictions(m_abs_immigr, by = c("gender", "visMin"), conf_level = 0.99)
