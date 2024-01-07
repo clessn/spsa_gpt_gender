@@ -54,6 +54,90 @@ ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff.p
        width = 9, height = 8)
 
 
+# Predire les biais absolus selon chacune des 2 VI à la fois --------------
+
+#Gender 
+
+GraphAbsGender <-
+  rbind(
+    predictions(m_abs_intervention, by = c("gender"), conf_level = 0.99) ,
+    predictions(m_abs_enviro, by = c("gender"), conf_level = 0.99),
+    predictions(m_abs_immigr, by = c("gender"), conf_level = 0.99)
+  ) %>%
+  mutate(id = c(
+    rep('Government\nintervention', times = 2),
+    rep('Environment', times = 2),
+    rep('Immigration', times = 2)
+  ),
+  gender = ifelse(gender == "male", "Men", "Women"))
+
+ggplot(GraphAbsGender, aes(x = estimate, y = gender)) +
+  geom_bar(stat = "identity",
+           aes(group = gender,
+               fill = gender),
+           position = position_dodge(width = 0.5),
+           width = 0.4,
+           alpha = 0.4) +
+  geom_point(aes(color = gender),
+             size = 3,
+             position = position_dodge(width = 0.5)) +
+  geom_linerange(aes(xmin = conf.low, xmax = conf.high,
+                     color = gender),
+                 position = position_dodge(width = 0.5)) +
+  scale_color_manual(values = c("#003f5c", "#ff7c43")) +
+  scale_fill_manual(values = c("#003f5c", "#ff7c43")) +
+  scale_x_continuous(limits = c(0, 0.4)) +
+  facet_wrap(~id, ncol = 1) +
+  clessnverse::theme_clean_light() +
+  ylab("") +
+  labs(caption = "Lines around points represent the 99% confidence interval.") +
+  xlab("\nPredicted absolute difference\nbetween GPT's prediction and CES model\n") +
+  theme(axis.title.x = element_text(hjust = 0.5), legend.position = "none")
+
+
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff_gender.png",
+       width = 9, height = 8)
+
+# visMin
+
+GraphAbs <-
+  rbind(
+    predictions(m_abs_intervention, by = c("visMin"), conf_level = 0.99) ,
+    predictions(m_abs_enviro, by = c("visMin"), conf_level = 0.99),
+    predictions(m_abs_immigr, by = c("visMin"), conf_level = 0.99)
+  ) %>% mutate(id = c(rep('Government\nintervention', times = 5),
+                rep('Environment', times = 5),
+                rep('Immigration', times = 5)))
+
+         
+
+  ggplot(GraphAbs, aes(x = estimate, y = visMin)) +
+  geom_bar(stat = "identity",
+           aes(group = visMin, fill = visMin),
+           position = position_dodge(width = 0.5),
+           width = 0.4,
+           alpha = 0.4) +
+  geom_point(aes(color = visMin),
+             size = 3,
+             position = position_dodge(width = 0.5)) +
+  geom_linerange(aes(xmin = conf.low, xmax = conf.high,
+                     color = visMin),
+                 position = position_dodge(width = 0.5)) +
+  scale_color_manual(values = c("#FF6F8B", "#3A8BFF", "#4CAF50", "#FFA07A", "#8A2BE2")) +
+  scale_fill_manual(values = c("#FF6F8B", "#3A8BFF", "#4CAF50", "#FFA07A", "#8A2BE2")) +
+  scale_x_continuous(limits = c(0, 0.4)) +
+  facet_wrap(~id, ncol = 1) +
+  clessnverse::theme_clean_light() +
+  ylab("") +
+  labs(caption = "Lines around points represent the 99% confidence interval.") +
+  xlab("\nPredicted absolute difference\nbetween GPT's prediction and CES model\n") +
+  theme(axis.title.x = element_text(hjust = 0.5), legend.position = "none")
+  
+  
+ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff_visMin.png",
+       width = 9, height = 8)
+
+
 # Predire les biais raw ---------------------------------------------------
 
 GraphRaw <-
