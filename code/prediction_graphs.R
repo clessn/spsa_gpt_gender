@@ -99,7 +99,7 @@ ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff_g
 
 # visMin
 
-GraphAbs <-
+GraphAbsvisMin <-
   rbind(
     predictions(m_abs_intervention, by = c("visMin"), conf_level = 0.99) ,
     predictions(m_abs_enviro, by = c("visMin"), conf_level = 0.99),
@@ -197,3 +197,4 @@ ggplot(GraphRaw, aes(x = estimate, y = visMin)) +
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_raw_diff.png",
        width = 12, height = 8)
+
