@@ -110,7 +110,7 @@ GraphAbsvisMin <-
 
          
 
-  ggplot(GraphAbs, aes(x = estimate, y = visMin)) +
+  ggplot(GraphAbsvisMin, aes(x = estimate, y = visMin)) +
   geom_bar(stat = "identity",
            aes(group = visMin, fill = visMin),
            position = position_dodge(width = 0.5),
