@@ -47,7 +47,9 @@ ggplot(GraphAbs, aes(x = estimate, y = visMin)) +
   ylab("") +
   labs(caption = "Lines around points represent the 99% confidence interval.") +
   xlab("\nPredicted absolute difference\nbetween GPT's prediction and CES model\n") +
-  theme(axis.title.x = element_text(hjust = 0.5))
+  theme(axis.title.x = element_text(hjust = 0.5, size = 15), axis.text.x = element_text(size = 12), 
+        axis.text.y = element_text(size = 12), strip.text.x = element_text(size = 12),
+        legend.text = element_text(size = 12), plot.caption = element_text(size = 10))
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff.png",
        width = 9, height = 8)
@@ -91,8 +93,11 @@ ggplot(GraphAbsGender, aes(x = estimate, y = gender)) +
   ylab("") +
   labs(caption = "Lines around points represent the 99% confidence interval.") +
   xlab("\nPredicted absolute difference\nbetween GPT's prediction and CES model\n") +
-  theme(axis.title.x = element_text(hjust = 0.5), legend.position = "none")
-
+  theme(axis.title.x = element_text(hjust = 0.5, size = 15), 
+        legend.position = "none", axis.text.x = element_text(size = 12), 
+        axis.text.y = element_text(size = 12), 
+        strip.text.x = element_text(size = 12), 
+        plot.caption = element_text(size = 10))
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff_gender.png",
        width = 9, height = 8)
@@ -130,8 +135,11 @@ GraphAbsvisMin <-
   ylab("") +
   labs(caption = "Lines around points represent the 99% confidence interval.") +
   xlab("\nPredicted absolute difference\nbetween GPT's prediction and CES model\n") +
-  theme(axis.title.x = element_text(hjust = 0.5), legend.position = "none")
-  
+  theme(axis.title.x = element_text(hjust = 0.5, size = 15), legend.position = "none",
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        strip.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 10))
   
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_absolute_diff_visMin.png",
        width = 9, height = 8)
@@ -183,17 +191,22 @@ ggplot(GraphRaw, aes(x = estimate, y = visMin)) +
   scale_fill_manual(values = c("#003f5c", "#ff7c43")) +
   geom_text(data = labels, y = 0, x = -0.35,
             aes(y = 0, label = left),
-            size = 3.5) +
+            size = 4) +
   geom_text(data = labels, y = 0, x = 0.35,
             aes(y = 0, label = right),
-            size = 3.5) +
+            size = 4) +
   scale_x_continuous(limits = c(-0.4, 0.4)) +
   scale_y_discrete(expand = c(0.50, 0.50)) +
   clessnverse::theme_clean_light() +
   ylab("") +
   labs(caption = "Lines around points represent the 99% confidence interval.\nA point left of 0 suggests GPT predicted a more left-leaning stance than the CES model.") +
   xlab("\nPredicted raw difference\nbetween GPT's prediction and CES model\n") +
-  theme(axis.title.x = element_text(hjust = 0.5))
+  theme(axis.title.x = element_text(hjust = 0.5, size = 15), 
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        strip.text.x = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        plot.caption = element_text(size = 10))
 
 ggsave("_SharedFolder_spsa_gpt_gender/graph/paper_pres/predicted_raw_diff.png",
        width = 12, height = 8)
