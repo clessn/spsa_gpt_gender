@@ -168,3 +168,4 @@ CES21$scale_immigr[is.nan(CES21$scale_immigr)] <- NA
 
 hist(CES21$scale_immigr)
 clessnverse::count_na(CES21$scale_immigr)
+

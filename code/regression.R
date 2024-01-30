@@ -1,8 +1,9 @@
 library(tidyverse)
+library(sondr)
 
 ### Load data
 
-df_ces21 <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2023-11-22.csv")
+df_ces21 <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/CES21_CleanData_2024-01-07.csv")
 rawdata <- sondr::read_any_csv("_SharedFolder_spsa_gpt_gender/data/ces2021.csv")
 
 
@@ -187,3 +188,4 @@ model_immigr <- lm(scale_immigr ~
 summary(model_immigr)
 
 saveRDS(model_immigr, "_SharedFolder_spsa_gpt_gender/data/models/immigr.rds")
+
