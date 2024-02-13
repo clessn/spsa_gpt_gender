@@ -43,4 +43,4 @@ models <- list(
                        province + rurality, data = df_ces21)
   )
 
-modelsummary(models, gof_map = c("nobs", "r.squared"), stars = TRUE, coef_rename = c("gendermale" = "Male", "visMinBlack" = "Black", "visMinWhite" = "White", "visMinIndigenous" = "Indigenous", "visMinAsian" = "Asian", "visMinArab" = "Arab", "provinceBritish-Columbia" = "British-Columbia", "provinceCanadian Territories" = "Canadian Territories", "provinceOntario" = "Ontario", "provincePrairies (Alberta, Saskatchewan, Manitoba)" = "Prairies (Alberta, Saskatchewan, Manitoba", "provinceQuébec" = "Quebec"),  output = "text.png")
+modelsummary(models, coef_omit = "std.error", gof_map = c("nobs", "r.squared"), stars = TRUE, coef_rename = c("gendermale" = "Male", "visMinBlack" = "Black", "visMinWhite" = "White", "visMinIndigenous" = "Indigenous", "visMinAsian" = "Asian", "visMinArab" = "Arab", "provinceBritish-Columbia" = "British-Columbia", "provinceCanadian Territories" = "Canadian Territories", "provinceOntario" = "Ontario", "provincePrairies (Alberta, Saskatchewan, Manitoba)" = "Prairies (Alberta, Saskatchewan, Manitoba", "provinceQuébec" = "Quebec"),  output = "text.png")
