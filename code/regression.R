@@ -94,7 +94,9 @@ df_ces21$visMinWhite[rawdata$cps21_vismin_9 == 1] <- 1
 df_ces21$visMinWhite[rawdata$cps21_vismin_9 != 1] <- 0
 table(df_ces21$visMinWhite)
 
-### Créer des échelles
+### Catégorie de référence
+
+df_ces21$gender <- relevel(df_ces21$gender, ref = "white_man")
 
 
 # Intervention de l'État --------------------------------------------------
