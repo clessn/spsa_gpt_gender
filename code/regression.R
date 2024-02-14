@@ -145,6 +145,10 @@ df_ces21$scale_immigr[is.nan(df_ces21$scale_immigr)] <- NA
 hist(df_ces21$scale_immigr)
 
 
+# Relevel -----------------------------------------------------------------
+
+df_ces21$gender <- relevel(df_ces21$gender, ref = "male")
+
 # Model gauche-droite -----------------------------------------------------
 
 model_intervention <- lm(scale_gd_econo ~

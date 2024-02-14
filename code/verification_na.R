@@ -20,9 +20,14 @@ clessnverse::count_na(clean_ses_gpt$enviro_reg_gpt)
 
 clessnverse::count_na(clean_ses_gpt$rich_gap_gpt)
 ## 131 NA
+table(clean_ses_gpt$rich_gap_gpt, useNA = "always")
+table(df_ses_gpt$rich_gap_gpt, useNA = "always")
+
 
 clessnverse::count_na(clean_ses_gpt$ineq_prob_gpt)
 ## 128 NA
+table(clean_ses_gpt$ineq_prob_gpt, useNA = "always")
+
 
 clessnverse::count_na(clean_ses_gpt$option_priv_gpt)
 ## 127 NA

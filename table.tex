@@ -2,64 +2,35 @@
 \centering
 \begin{tabular}[t]{lccc}
 \toprule
-  & model\_intervention & model\_enviro & model\_immigr\\
+  & State's Intervention model & Environmental model & Immigration model\\
 \midrule
-(Intercept) & \num{0.111} & \num{0.361} & \num{0.557}\\
- & (\num{0.018}) & (\num{0.022}) & (\num{0.020})\\
-gendermale & \num{0.069} & \num{0.055} & \num{0.016}\\
- & (\num{0.011}) & (\num{0.013}) & \vphantom{1} (\num{0.012})\\
-visMinBlack & \num{-0.081} & \num{-0.043} & \num{-0.161}\\
- & (\num{0.022}) & (\num{0.026}) & (\num{0.023})\\
-visMinWhite & \num{-0.007} & \num{-0.023} & \num{0.003}\\
- & (\num{0.008}) & (\num{0.009}) & (\num{0.009})\\
-visMinIndigenous & \num{-0.035} & \num{-0.024} & \num{0.046}\\
- & (\num{0.016}) & (\num{0.019}) & (\num{0.018})\\
-visMinAsian & \num{0.025} & \num{-0.005} & \num{0.004}\\
- & (\num{0.013}) & (\num{0.015}) & (\num{0.014})\\
-visMinArab & \num{0.045} & \num{-0.006} & \num{-0.068}\\
- & (\num{0.029}) & (\num{0.034}) & (\num{0.031})\\
-age35-54 years old & \num{0.027} & \num{0.099} & \num{0.094}\\
- & (\num{0.006}) & (\num{0.007}) & \vphantom{1} (\num{0.007})\\
-age55 years old or more & \num{0.035} & \num{0.076} & \num{0.058}\\
- & (\num{0.006}) & (\num{0.007}) & (\num{0.006})\\
-educationcollegial/technical & \num{0.018} & \num{-0.026} & \num{-0.103}\\
- & (\num{0.014}) & (\num{0.017}) & \vphantom{1} (\num{0.015})\\
-educationuniversity & \num{0.015} & \num{-0.101} & \num{-0.210}\\
- & (\num{0.014}) & (\num{0.017}) & (\num{0.015})\\
-incomebetween \$40,001 and \$100,000 & \num{0.031} & \num{-0.002} & \num{-0.013}\\
- & (\num{0.005}) & (\num{0.006}) & (\num{0.006})\\
-incomemore than \$100,000 & \num{0.092} & \num{-0.009} & \num{-0.040}\\
- & (\num{0.006}) & (\num{0.007}) & (\num{0.007})\\
-provinceBritish-Columbia & \num{0.050} & \num{-0.007} & \num{0.013}\\
- & (\num{0.011}) & (\num{0.013}) & (\num{0.012})\\
-provinceCanadian Territories & \num{0.022} & \num{-0.001} & \num{-0.018}\\
- & (\num{0.039}) & (\num{0.047}) & (\num{0.042})\\
-provinceOntario & \num{0.047} & \num{0.016} & \num{0.045}\\
- & (\num{0.009}) & (\num{0.011}) & \vphantom{1} (\num{0.010})\\
-provincePrairies (Alberta, Saskatchewan, Manitoba) & \num{0.098} & \num{0.114} & \num{0.061}\\
- & (\num{0.010}) & (\num{0.012}) & (\num{0.011})\\
-provinceQuébec & \num{0.030} & \num{-0.096} & \num{0.009}\\
- & (\num{0.009}) & (\num{0.011}) & (\num{0.010})\\
-ruralityurban & \num{-0.038} & \num{-0.057} & \num{-0.043}\\
- & (\num{0.005}) & (\num{0.005}) & (\num{0.005})\\
-gendermale × visMinBlack & \num{-0.044} & \num{-0.063} & \num{0.044}\\
- & (\num{0.034}) & (\num{0.040}) & (\num{0.036})\\
-gendermale × visMinWhite & \num{0.000} & \num{0.003} & \num{0.001}\\
- & (\num{0.012}) & (\num{0.014}) & (\num{0.013})\\
-gendermale × visMinIndigenous & \num{0.006} & \num{0.027} & \num{0.003}\\
- & (\num{0.026}) & (\num{0.031}) & (\num{0.028})\\
-gendermale × visMinAsian & \num{-0.026} & \num{-0.006} & \num{0.022}\\
- & (\num{0.020}) & (\num{0.023}) & (\num{0.021})\\
-gendermale × visMinArab & \num{-0.036} & \num{0.010} & \num{0.000}\\
- & (\num{0.043}) & (\num{0.050}) & (\num{0.046})\\
+(Intercept) & \num{0.180} [\num{0.019}] *** & \num{0.416} [\num{0.022}] *** & \num{0.573} [\num{0.020}] ***\\
+Gender Female & \num{-0.069} [\num{0.011}] *** & \num{-0.055} [\num{0.013}] *** & \num{-0.016} [\num{0.012}]\\
+Race Black & \num{-0.125} [\num{0.026}] *** & \num{-0.107} [\num{0.030}] *** & \num{-0.117} [\num{0.028}] ***\\
+Race White & \num{-0.007} [\num{0.009}] & \num{-0.019} [\num{0.010}] + & \num{0.004} [\num{0.010}]\\
+Race Indigenous & \num{-0.029} [\num{0.020}] & \num{0.003} [\num{0.024}] & \num{0.049} [\num{0.022}] *\\
+Race Asian & \num{-0.001} [\num{0.015}] & \num{-0.011} [\num{0.018}] & \num{0.026} [\num{0.017}]\\
+Race Arab & \num{0.009} [\num{0.031}] & \num{0.003} [\num{0.037}] & \num{-0.069} [\num{0.034}] *\\
+35-54 years old & \num{0.027} [\num{0.006}] *** & \num{0.099} [\num{0.007}] *** & \num{0.094} [\num{0.007}] ***\\
+55+ years old & \num{0.035} [\num{0.006}] *** & \num{0.076} [\num{0.007}] *** & \num{0.058} [\num{0.006}] ***\\
+College or Technical Education & \num{0.018} [\num{0.014}] & \num{-0.026} [\num{0.017}] & \num{-0.103} [\num{0.015}] ***\\
+University & \num{0.015} [\num{0.014}] & \num{-0.101} [\num{0.017}] *** & \num{-0.210} [\num{0.015}] ***\\
+Income between \$40,001 and \$100,000 & \num{0.031} [\num{0.005}] *** & \num{-0.002} [\num{0.006}] & \num{-0.013} [\num{0.006}] *\\
+Income more than \$100 000 & \num{0.092} [\num{0.006}] *** & \num{-0.009} [\num{0.007}] & \num{-0.040} [\num{0.007}] ***\\
+British-Columbia & \num{0.050} [\num{0.011}] *** & \num{-0.007} [\num{0.013}] & \num{0.013} [\num{0.012}]\\
+Canadian Territories & \num{0.022} [\num{0.039}] & \num{-0.001} [\num{0.047}] & \num{-0.018} [\num{0.042}]\\
+Ontario & \num{0.047} [\num{0.009}] *** & \num{0.016} [\num{0.011}] & \num{0.045} [\num{0.010}] ***\\
+Prairies (Alberta, Saskatchewan, Manitoba) & \num{0.098} [\num{0.010}] *** & \num{0.114} [\num{0.012}] *** & \num{0.061} [\num{0.011}] ***\\
+Quebec & \num{0.030} [\num{0.009}] ** & \num{-0.096} [\num{0.011}] *** & \num{0.009} [\num{0.010}]\\
+Urban's area of living & \num{-0.038} [\num{0.005}] *** & \num{-0.057} [\num{0.005}] *** & \num{-0.043} [\num{0.005}] ***\\
+Gender Female:Race Black & \num{0.044} [\num{0.034}] & \num{0.063} [\num{0.040}] & \num{-0.044} [\num{0.036}]\\
+Gender Female:Race White & \num{0.000} [\num{0.012}] & \num{-0.003} [\num{0.014}] & \num{-0.001} [\num{0.013}]\\
+Gender Female:Race Indigenous & \num{-0.006} [\num{0.026}] & \num{-0.027} [\num{0.031}] & \num{-0.003} [\num{0.028}]\\
+Gender Female:Race Asian & \num{0.026} [\num{0.020}] & \num{0.006} [\num{0.023}] & \num{-0.022} [\num{0.021}]\\
+Gender Female:Race Arab & \num{0.036} [\num{0.043}] & \num{-0.010} [\num{0.050}] & \num{0.000} [\num{0.046}]\\
 \midrule
 Num.Obs. & \num{14774} & \num{14701} & \num{14813}\\
 R2 & \num{0.058} & \num{0.098} & \num{0.083}\\
-R2 Adj. & \num{0.056} & \num{0.097} & \num{0.082}\\
-AIC & \num{1172.2} & \num{5759.4} & \num{3385.9}\\
-BIC & \num{1362.2} & \num{5949.2} & \num{3576.0}\\
-Log.Lik. & \num{-561.086} & \num{-2854.676} & \num{-1667.970}\\
-RMSE & \num{0.25} & \num{0.29} & \num{0.27}\\
 \bottomrule
 \end{tabular}
 \end{table}
