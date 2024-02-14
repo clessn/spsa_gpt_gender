@@ -24,6 +24,7 @@ clean_ses_gpt$fed_spend_gpt[df_ses_gpt$fed_spend %in% c("Spend about the same as
 clean_ses_gpt$fed_spend_gpt[df_ses_gpt$fed_spend == "Spend more"] <- 0
 clean_ses_gpt$fed_spend_gpt[df_ses_gpt$fed_spend == "Don't know/Prefer not to answer"] <- NA
 table(clean_ses_gpt$fed_spend_gpt)
+clessnverse::count_na(clean_ses_gpt$fed_spend_gpt)
 
 table(df_ses_gpt$recent_immi)
 clean_ses_gpt$recent_immi_gpt <- NA
@@ -110,3 +111,4 @@ table(clean_ses_gpt$option_priv_gpt)
 # Save data as RDS --------------------------------------------------------
 
 saveRDS(clean_ses_gpt, "_SharedFolder_spsa_gpt_gender/data/clean_ses_gpt.rds")
+
