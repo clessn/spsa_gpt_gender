@@ -7,9 +7,9 @@ df <- readRDS("_SharedFolder_spsa_gpt_gender/data/df_cramer.rds") %>%
 
 # Cramer's V -------------------------------------------------------------
 
-rcompanion::cramerV(df_join$scale_gd_econo, df_join$scale_gpt_intervention)
-rcompanion::cramerV(df_join$scale_enviro, df_join$scale_gpt_enviro)
-rcompanion::cramerV(df_join$scale_immigr, df_join$scale_gpt_immigr)
+rcompanion::cramerV(df$scale_gd_econo, df$scale_gpt_intervention)
+rcompanion::cramerV(df$scale_enviro, df$scale_gpt_enviro)
+rcompanion::cramerV(df$scale_immigr, df$scale_gpt_immigr)
 
 # Gender ----------------------------------------------------------------
 # female == 1
@@ -45,9 +45,9 @@ df_immigr <- df %>%
 
 # Combine the dataframes with a new column indicating the source
 df_combined <- bind_rows(
-  df_econ %>% mutate(Source = "Economic"),
-  df_enviro %>% mutate(Source = "Environmental"),
-  df_immigr %>% mutate(Source = "Immigration")
+  df_econ %>% mutate(Issues = "Economic"),
+  df_enviro %>% mutate(Issues = "Environmental"),
+  df_immigr %>% mutate(Issues = "Immigration")
 )
 
 # Reorder columns to place the Source column first
@@ -55,4 +55,4 @@ df_combined <- df_combined %>% select(Source, everything())
 
 # Create a Markdown table
 df_combined %>%
-  kable(format = "markdown", align = "lcccccc")
+  kable(format = "latex", align = "lcccccc")
