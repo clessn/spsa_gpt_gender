@@ -40,7 +40,7 @@ table(df_ces21$income)
 df_ces21$income <- NA
 df_ces21$income[as.numeric(rawdata$cps21_income_number) < 40000] <- "less than $40,000"
 df_ces21$income[as.numeric(rawdata$cps21_income_number) >= 40000 & 
-                   as.numeric(rawdata$cps21_income_number) <= 100000] <- "between $40,001 and $100,000"
+                as.numeric(rawdata$cps21_income_number) <= 100000] <- "between $40,001 and $100,000"
 df_ces21$income[as.numeric(rawdata$cps21_income_number) > 100000] <- "more than $100,000"
 df_ces21$income <- factor(df_ces21$income, level = c("less than $40,000", "between $40,001 and $100,000", "more than $100,000"))
 table(df_ces21$income)
@@ -164,7 +164,7 @@ df_join <- df_grille |>
     scale_gpt_enviro, scale_gpt_immigr, scale_gpt_intervention
   )
 
-
+saveRDS(df_join, "_SharedFolder_spsa_gpt_gender/data/df_cramer.rds")
 # Cramer's V -------------------------------------------------------------
 
 rcompanion::cramerV(df_join$scale_gd_econo, df_join$scale_gpt_intervention)
